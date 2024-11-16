@@ -1,0 +1,256 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Hardwares";
+    ViewData["CurrentScreen"] = "Hardwares";
+}
+
+<div class="d-flex mb-4">
+    <p class="h3 mb-0 align-middle">
+        <a id="back-btn" class="bi h3 bi-arrow-left-short me-2"></a>
+        Product Information
+    </p>
+</div>
+ 
+@*Info*@
+<div class="basic-info">
+    @* Primary Informations *@
+    <div class="primary-info">
+        @* ProductPhoto *@
+        <div class="form-section d-flex flex-column m-2 border p-4 w-100">
+            <div class="d-flex flex-row w-100">
+                <div class="photo-container me-4"
+                     style="height: 224px;
+                        border-radius:12px;
+                        box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.2);
+                        background-image:url('https://samplecraze.com/wp-content/uploads/2019/01/bpm_mockup.jpg');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size:cover;
+                        width:314px;">
+                </div>
+                <div class="w-25 d-flex flex-column justify-content-center align-items-center gap-2">
+                    <a class="buttons-class btn btn-outline-success" asp-controller="Product" asp-action="EditProduct" asp-route-id="@Model.ProductId">Edit</a>
+                    <a asp-action="AddOrEdit" asp-controller="ActionPlan" asp-route-productId="@Model.ProductId" class="buttons-class btn btn-outline-success">Action Plan</a>
+                    <a class="buttons-class btn btn-outline-primary">Custodian</a>
+                </div>
+               
+
+                </div>
+            <hr />
+            <div class="d-flex flex-row align-items-center h-100">
+                <p class="m-0 w-75">@Model.ProductName</p>
+                <button type="button" class="upload-button btn btn-outline-info w-25" >Upload Photo</button>
+            </div></div>
+        @* Basic Information *@
+        <div class="form-section light-blue flex-fill m-2 p-4 w-100">
+            <div class="d-flex">
+                <p class="h5 text-secondary flex-fill mb-0 align-content-center">Basic Information</p>
+            </div>
+            <hr />
+
+            <div class="d-flex flex-column">
+                <div class="data-container d-flex flex-row w-100 align-items-center">
+                    <i class="bi bi-person-circle me-3"
+                       style="font-size: 24px;"></i>
+                    <div class="w-100">
+                        <p class="m-0" style="font-size: 12px; font-weight: bold;">IT Custodian</p>
+                        <p class="data-display text-secondary m-0" style="font-size: 14px;">
+                            @(Model.AssigendItCustodian == null ? "No Record" : Model.AssigendItCustodian.FirstName + " " + Model.AssigendItCustodian.LastName)
+                        </p>
+                    </div>
+                    <i class="bi bi-wrench me-3"
+                       style="font-size: 24px;"></i>
+                    <div class="w-100">
+                        <p class="m-0" style="font-size: 12px; font-weight: bold;">Support Status</p>
+                        <p class="data-display text-secondary m-0" style="font-size: 14px;">@(Model.Status == null ? "No Record" : Model.Status)</p>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="primary-data-container">
+                    <div class="d-flex flex-column text-start">
+                        <p class="fw-bold m-0"
+                           style="font-size:14px;">Product Name</p>
+                        <p class="data-display text-secondary" style="font-size:16px;">@(Model.ProductName == null ? "No Record" : Model.ProductName)</p>
+                    </div>
+                    <div class="d-flex flex-column text-start">
+                        <p class="fw-bold m-0"
+                           style="font-size:14px;">Product ID</p>
+                        <p class="data-display text-secondary" style="font-size:16px;">@(Model.ProductId)</p>
+                    </div>
+                    <div class="d-flex flex-column text-start">
+                        <p class="fw-bold m-0"
+                           style="font-size:14px;">Product Code</p>
+                        <p class="data-display text-secondary" style="font-size:16px;">@(Model.ProductCode == null ? "No Record" : Model.ProductCode)</p>
+                    </div>
+                    <div class="d-flex flex-column text-start">
+                        <p class="fw-bold m-0"
+                           style="font-size:14px;">Purchase Version</p>
+                        <p class="data-display text-secondary" style="font-size:16px;">@(Model.ProductVersion == null ? "No Record" : Model.ProductVersion)</p>
+                    </div>
+                    <div class="d-flex flex-column text-start">
+                        <p class="fw-bold m-0"
+                           style="font-size:14px;">Product Order #</p>
+                        <p class="data-display text-secondary" style="font-size:16px;">@(Model.PurchaseOrderNo == null ? "No Record" : Model.PurchaseOrderNo)</p>
+                    </div>
+                    <div class="d-flex flex-column text-start">
+                        <p class="fw-bold m-0"
+                           style="font-size:14px;">Product Category</p>
+                        <p class="data-display text-secondary" style="font-size:16px;">@(Model.ProductCategory == null ? "No Record" : Model.ProductCategory)</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @* Other Informations *@
+    <div class="other-info-div">
+        <div class="other-infos light-blue">
+
+            <div class="dates-and-status d-flex flex-column p-4">
+                <div class="d-flex justify-content-start w-100">
+                    <p class="h5 text-secondary flex-fill mb-0 align-content-center">Dates and Status</p>
+                </div>
+                <hr />
+                <div class="d-flex flex-column w-100">
+                    <div class="data-container w-100">
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0"
+                               style="font-size:14px;">End Of Life</p>
+                            <p class="data-display text-secondary">@(Model.EOLDate == null ? "No Record" : Model.EOLDate)</p>
+                        </div>
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0"
+                               style="font-size:14px;">End Of Support</p>
+                            <p class="data-display text-secondary">@(Model.EOSDate == null ? "No Record" : Model.EOSDate)</p>
+                        </div>
+                    </div>
+                    <div class="data-container w-100">
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0"
+                               style="font-size:14px;">End Of Extended Support</p>
+                            <p class="data-display text-secondary">@(Model.EOESDate == null ? "No Record" : Model.EOESDate)</p>
+                        </div>
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0"
+                               style="font-size:14px;">Status</p>
+                            <p class="data-display text-secondary">@(Model.Status == null ? "No Record" : Model.Status)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="other-informations d-flex flex-column p-4">
+                <div class="d-flex justify-content-start w-100">
+                    <p class="h5 text-secondary flex-fill mb-0 align-content-center">Other Information</p>
+                </div>
+                <hr />
+                <div class="d-flex flex-column w-100">
+                    <div class="data-container w-100">
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0">Vendor</p>
+                            <p class="data-display text-secondary">@(Model.VendorName == null ? "No Record" : Model.VendorName)</p>
+                        </div>
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0">Manufacturer</p>
+                            <p class="data-display text-secondary">@(Model.Manufacturer == null ? "No Record" : Model.Manufacturer)</p>
+                        </div>
+                    </div>
+                    <div class="data-container w-100">
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0">Support Documentation URL</p>
+                            <p class="data-display text-secondary">@(Model.SupportDocumentationURL == null ? "No Record" : Model.SupportDocumentationURL)</p>
+                        </div>
+                        <div class="d-flex flex-column w-50"
+                             style="min-width: 50%">
+                            <p class="fw-bold m-0">Support Email</p>
+                            <p class="data-display text-secondary">@(Model.SupportEmail == null ? "No Record" : Model.SupportEmail)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@* Action Plan List *@
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h2>Action Plan List</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().ProductId)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().Title)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().Description)</th>
+                    <th>Assigned To</th>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().StartDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().EndDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActionPlans.First().Reminder)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ActionPlans)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ProductId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td>@item.AssignedToCustodianId @Html.DisplayFor(modelItem => item.AssignedToCustodian.FirstName) @Html.DisplayFor(modelItem => item.AssignedToCustodian.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Reminder)</td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@item.ActionPlanId">
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-action="AddOrEdit" asp-route-id="@item.ActionPlanId" class="btn btn-warning">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure to delete this record?')">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("HardwareHistoryPartial", "Product")',
+                type: 'GET',
+                success: function (data) {
+                    $('#maintenance-history-container').html(data);
+                },
+                error: function (a, b, c) {
+                    alert("error " + c);
+                }
+            });
+        });
+
+        function changeButtonValue(value) {
+            var statusButton = document.getElementById('statusButton');
+            statusButton.textContent = value;
+        }
+    </script>
+}

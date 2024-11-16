@@ -1,0 +1,128 @@
+﻿@model TimeBasedPreventiveMeasures.Models.Data.Custodian
+
+@{
+    ViewData["Title"] = "Hardwares";
+    ViewData["CurrentScreen"] = "Hardwares";
+}
+
+<style>
+    .AddIT {
+        background-color: #E3F1FF;
+        max-width: 100%;
+        width: 1400px;
+        padding: 20px;
+        display: flex;
+        height: 80vh;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: auto;
+        gap: 10px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+    }
+
+    .form-control {
+        border-radius: 25px; 
+        width: 100%; 
+    }
+
+    .form-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .form-row .form-group {
+            flex: 0 0 48%;
+            margin-bottom: 1rem;
+        }
+    .viewlist{
+        justify-content:center;
+        background-color: #7895CB;
+    }
+
+    .register{
+        background-color: #4A55A2;
+        border-radius: 25px;
+    }
+
+</style>
+<div class="container">
+    <div class="row">
+        <form asp-action="AddOrEdit" autocomplete="off" class="AddIT">
+            <div class="d-flex align-items-center mb-3">
+                <a id="Itperson" class="btn person-button">
+                    <i class="bi bi-person-circle" style="font-size: 5rem;"></i>
+                </a>
+                <h1>Add IT Custodian
+                    <div class="viewbutton center">
+                        <a asp-action="Index" class="btn btn-secondary viewlist" style="width: 50%; margin-left: 60px;" >View Lists</a>
+                    </div>
+                </h1>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CustodianId" />
+
+            <div class="form-row row">
+                <div class="form-group col-md-6 col-lg-3 position-relative">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="FirstName" class="form-control responsive-input" />
+                        <div class="input-group-append">
+                            <span class="input-group-text icon-wrapper"><i class="bi bi-person-square"></i></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6 col-lg-3 position-relative">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="LastName" class="form-control responsive-input" />
+                        <div class="input-group-append">
+                            <span class="input-group-text icon-wrapper"><i class="bi bi-person-square"></i></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6 col-lg-3 position-relative">
+                    <label asp-for="CustodianRole" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="CustodianRole" class="form-control responsive-input" />
+                        <div class="input-group-append">
+                            <span class="input-group-text icon-wrapper"><i class="bi bi-person-add"></i></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="CustodianRole" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6 col-lg-3 position-relative">
+                    <label asp-for="Email" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control responsive-input" />
+                        <div class="input-group-append">
+                            <span class="input-group-text icon-wrapper"><i class="bi bi-envelope-at-fill"></i></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-8">
+                    <div class="addbutton">
+                        <input type="submit" value="Submit" class="btn btn-primary register" style="width:200%; margin-right: 200px; " />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

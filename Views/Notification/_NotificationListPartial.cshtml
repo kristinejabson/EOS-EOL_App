@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    bool isPartial = (bool)(ViewData["IsPartial"] ?? false);
+}
+
+<div class="d-flex flex-column">
+    <div class="d-flex align-items-center mb-4">
+        <p class="h5 flex-fill mb-0">Notifications</p>
+
+        @*Only show if showAll is true*@
+        @if (!isPartial)
+        {
+            <input type="email" class="form-control w-auto me-2" id="exampleFormControlInput1" placeholder="Search">
+            <a class="btn btn-light custom border"><i class="bi bi-check-all me-2"></i>Mark all as read</a>
+
+        }
+
+        @if (isPartial)
+        {
+            <a class="btn btn-light custom border me-2"><i class="bi bi-check-all"></i></a>
+            <a class="btn btn-light custom-button-light" asp-action="Index" asp-controller="Notification">View all</a>
+        }
+    </div>
+
+    @for (int i = 0; i < 25; i++)
+    {
+        <div class=" p-2 border-0 border-top pointer notification-item" onclick="viewNotification()">
+            <div class="d-flex flex-column">
+                <div class="d-flex align-items-center">
+                    @*Prefix*@
+                    <div class="status-badge-dot status-critical me-2"></div>
+                    @*Main Content*@
+                    <div class="d-flex flex-column">
+                        <p class="mb-0 flex-fill"><span class="h6">[Hardware Name]</span> license is expiring in 24 days.</p>
+                        <p class="mb-0">[Notification short description here or message]</p>
+                    </div>
+
+                    @*Suffix*@
+                </div>
+
+                <div class="d-flex small text-secondary">
+                    July 24, 2024
+                </div>
+            </div>
+        </div>
+    }
+</div>

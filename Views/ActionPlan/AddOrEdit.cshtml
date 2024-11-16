@@ -1,0 +1,151 @@
+﻿@model TimeBasedPreventiveMeasures.Models.Data.ActionPlan
+@{
+    ViewData["Title"] = "Hardwares";
+    ViewData["CurrentScreen"] = "Hardwares";
+}
+
+<style>
+    .card {
+        margin-top: 30px;
+        width: 1100px;
+        justify-self: center;
+        background-color: #E3F1FF;
+        padding: 20px;
+        position: relative;
+    }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 10px; 
+            background: linear-gradient(to bottom, #E3F1FF 20%, #92B4EC 20%, #92B4EC 40%, #E3F1FF 40%, #E3F1FF 60%, #92B4EC 60%, #92B4EC 80%, #E3F1FF 80%);
+            background-size: 100% 70px; 
+            z-index: -1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: repeating-linear-gradient( to bottom, transparent, transparent 10px, #92B4EC 10px, #92B4EC 20px );
+            z-index: 1;
+        }
+
+    .card-header {
+        font-size: 1.5rem;
+        padding: 3rem;
+        background-color: #4A55A2;
+        margin-left: 30px;
+        margin-right: 23px;
+
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .button1{
+        border-radius: 5px;
+        background-color: limegreen;
+    }
+    
+    .button2{
+        border-radius: 5px;
+        background-color: #4A55A2;
+    }
+
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header text-white text-center">
+                    <h1 class="m-0">@((Model.ActionPlanId == 0) ? "Add Action Plan" : "Edit Action Plan")</h1>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddOrEdit" method="post" autocomplete="off">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="ActionPlanId" />
+
+                        <input asp-for="ProductId" type="hidden" value="@Model.ProductId" />
+                        <span asp-validation-for="ProductId" class="text-danger"></span>
+
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AssignedToCustodianId" class="control-label"></label>
+                            <select asp-for="AssignedToCustodianId" class="form-control" asp-items="ViewBag.Custodians">
+                                <option value="">-- Select Custodian --</option>
+                            </select>
+                            <span asp-validation-for="AssignedToCustodianId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="StartDate" class="control-label"></label>
+                            <input asp-for="StartDate" class="form-control" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="EndDate" class="control-label"></label>
+                            <input asp-for="EndDate" class="form-control" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            <select asp-for="Status" class="form-control">
+                                <option value="">-- Select Status --</option>
+                                <option value="Active">Active</option>
+                                <option value="Extended Support">Extended Support</option>
+                                <option value="Decommissioned">Decommissioned</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Reminder" class="control-label"></label>
+                            <textarea asp-for="Reminder" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Reminder" class="text-danger"></span>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn button1 w-100" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <a asp-action="Index" class="btn button2 w-100">View All</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

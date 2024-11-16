@@ -1,0 +1,178 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Hardwares";
+    ViewData["CurrentScreen"] = "Hardwares";
+}
+
+<head>
+    <style>
+        .page-link {
+            min-width: 45px !important;
+            margin-right: 4px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            text-align: center;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
+
+            .pagination li {
+                text-align: center !important;
+                border-radius: 12px !important;
+            }
+
+                .pagination li .page-link {
+                    border-radius: 4px !important;
+                }
+
+        .btn-outline-success {
+            border-color: #C5DFF8;
+            color: black;
+        }
+
+            .btn-outline-success:hover {
+                background-color: #4A55A2;
+                border-color: #4A55A2;
+                color: white;
+            }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+        }
+
+            .status-badge[data-status="Active"] {
+                background-color: #28a745 !important; /* Green */
+                color: white !important;
+            }
+
+            .status-badge[data-status="Extended Support"] {
+                background-color: #ffc107 !important; /* Yellow */
+                color: black !important;
+            }
+
+            .status-badge[data-status="Decommissioned"] {
+                background-color: #343a40 !important; /* Dark gray/black */
+                color: white !important;
+            }
+
+            /* Default color for any other status */
+            .status-badge:not([data-status="Active"]):not([data-status="Extended Support"]):not([data-status="Decommissioned"]) {
+                background-color: #dc3545 !important; /* Red */
+                color: white !important;
+            }
+            .add1{
+            background-color: #2C4E80;
+            }
+
+                .add1:hover {
+                background-color: #9CDBA6;
+                }
+
+             .add2{
+                background-color: #333A73;
+            }
+                 .add2:hover {
+                background-color: #9CDBA6;
+                }
+    </style>
+</head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var iconLinks = document.querySelectorAll("a[onclick]");
+        for (var i = 0; i < iconLinks.length; i++) {
+            iconLinks[i].addEventListener("click", function (event) {
+                event.preventDefault();
+                window.location.href = this.getAttribute("onclick");
+            });
+        }
+    });
+</script>
+
+<div class="d-flex mb-3">
+    <h3 class="flex-fill text-dark">Product Inventory</h3>
+    <div class="d-flex align-items-center ms-auto">
+
+        <a class="btn me-4 text-white add1" onclick="@Url.Action("AddorEdit","Custodian")">Add IT Custodian</a>
+
+        <a class="btn me-3 text-white add2" onclick="@Url.Action("AddProduct", "Product")">Add Product</a>
+
+        <form class="d-flex" asp-action="Index" asp-controller="Product">
+            <input id="custom-search-box" name="searchString" class="form-control me-1" type="search" placeholder="Search" aria-label="Search" value="@ViewData["CurrentFilter"]">
+        </form>
+
+    </div>
+</div>
+
+<div class="custom-data-table border">
+    <table id="maintenance-table" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Product Name</th>
+                <th>Product Code</th>
+                <th>EOS Date</th>
+                <th>EOL Date</th>
+                <th>EOES Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-sm btn-light" asp-action="ProductDetails" asp-route-id="@product.ProductId">View</a>
+                    </td>
+                    <td>@product.ProductName</td>
+                    <td>@product.ProductCode</td>
+                    <td>@product.EOSDate</td>
+                    <td>@(product.EOLDate == null ? "No Date Assigned" : product.EOLDate)</td>
+                    <td>@(product.EOESDate == null ? "No Date Assigned" : product.EOESDate)</td>
+                    <td>
+                        <span class="status-badge" data-status="@product.Status">@product.Status</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const badges = document.querySelectorAll('.status-badge');
+        badges.forEach(badge => {
+            const status = badge.getAttribute('data-status');
+            switch (status) {
+                case 'Active':
+                    badge.style.setProperty('background-color', '#28a745', 'important');
+                    badge.style.setProperty('color', 'white', 'important');
+                    break;
+                case 'Extended Support':
+                    badge.style.setProperty('background-color', '#ffc107', 'important');
+                    badge.style.setProperty('color', 'black', 'important');
+                    break;
+                case 'Decommissioned':
+                    badge.style.setProperty('background-color', '#343a40', 'important');
+                    badge.style.setProperty('color', 'white', 'important');
+                    break;
+                default:
+                    badge.style.setProperty('background-color', '#dc3545', 'important');
+                    badge.style.setProperty('color', 'white', 'important');
+            }
+        });
+    });
+</script>
+
+@section Scripts {
+    <script type="module" src="~/js/hardware/hardware_inventory.js"></script>
+}

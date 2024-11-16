@@ -1,0 +1,125 @@
+﻿@import 'colors.css';
+
+/*Custom Data Table*/
+.custom-data-table {
+    background: #ECF4FD !important;
+    border-radius: 16px;
+    padding: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    overflow-x: auto;
+}
+
+/*Hide the data table info from datatables library*/
+.custom-data-table .dataTables_info {
+    display: none;
+}
+
+.custom-data-table th {
+    text-align: center !important;
+    padding: 12px;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid #bfbfbf;
+}
+
+.custom-data-table td {
+    padding: 12px !important;
+    border-top: 1px solid #bfbfbf;
+    cursor: pointer;
+}
+
+.custom-data-table tr {
+    transition: 300ms;
+}
+
+.custom-data-table tr:hover {
+    background: #CAF4FF;
+}
+
+.status-badge-dot {
+    color: white;
+    height: 12px;
+    width: 12px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.status-badge {
+    color: white;
+    padding: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 50px;
+}
+
+.status-active {
+    background: #00CC00; /* Darker green */
+}
+
+.status-disposed {
+    background: #333333; /* Dark grey */
+    color: white !important;
+}
+
+.status-need-maintenance {
+    background: #CCCC66; /* Darker yellow */
+    color: #333; /* Darker text for better contrast */
+}
+
+.status-warning {
+    background: #FF9900; /* Darker orange */
+}
+
+.status-critical {
+    background: #CC3333; /* Darker red */
+}
+
+.forms-container {
+    display: flex;
+    max-width: 1024px;
+}
+
+.form-section {
+    max-width: 500px;
+    border-radius: 24px;
+}
+
+.form-section-medium {
+    max-width: 800px;
+    border-radius: 24px;
+}
+
+.form-section-shadow {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.notification-popup {
+    display: block;
+    background: white;
+    max-width: 500px;
+    min-width: 400px;
+    max-height: calc(100vh - 100px);
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 24px;
+    border-radius: 12px;
+    color: #313638;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.notification-popup.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-item {
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.notification-item:hover {
+    background: whitesmoke !important;
+}

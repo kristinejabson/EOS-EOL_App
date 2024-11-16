@@ -1,0 +1,228 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Home Page";
+
+    var activeCount = Model.Count(p => p.Status == "Active");
+    var extendedSupportCount = Model.Count(p => p.Status == "Extended Support");
+    var totalCount = activeCount + extendedSupportCount;
+    var activePercentage = totalCount > 0 ? (activeCount / (double)totalCount) * 100 : 0;
+    var extendedSupportPercentage = totalCount > 0 ? (extendedSupportCount / (double)totalCount) * 100 : 0;
+}
+
+<head>
+    <style>
+        .name{
+            font-size: 40px;
+        }
+        .container {
+            margin-top: 20px;
+            display: flex;
+            justify-content:flex-start;
+            margin-right:2px;
+            margin-left:3px;
+        }
+
+        .status-box {
+            width: 25px;
+            height: 25px;
+            margin: 5px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .status-box.active {
+                background-color: #4caf50;
+            }
+
+            .status-box.extended-support {
+                background-color: #ffeb3b;
+            }
+
+        .product-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #F5F7F8;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 900px;
+            margin-left: -445px;
+            margin-right:-180px;
+
+        }
+
+        .product-boxes {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .chart-container {
+            width: 420px;
+            height: 400px;
+            padding: 20px;
+            background-color: #F5F7F8;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-right:500px;
+        }
+
+            .chart-container canvas {
+
+                width: 300px;
+                height: 300px;
+                display: block;
+                margin: 0 auto;
+            }
+
+        .product-info {
+            font-size: 16px;
+            color: #333;
+            text-align: right;
+        }
+
+            .product-info span {
+                font-weight: bold;
+            }
+        .otherBox{
+            margin-top: 10px;
+            background-color: #C5DFF8;
+            width:800px;
+            height: 320px;
+            border-radius: 15px;
+        }
+
+        .title-and-button {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text-dark {
+            margin: 0;
+        }
+
+        .total{
+            font-size: 20px;
+        }
+        .second{
+            width: 600px;
+            height: 200px;
+            margin-top: 50px;
+            background-color: #C5DFF8;
+            padding: 30px;
+            border-radius: 5px;
+            margin-left: 15px;
+        }
+            .it{
+                font-size:30px;
+                font-weight: bold;
+            }
+        .viewbutton{
+            margin-left: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            background-color: #92B4EC;
+        }
+        .add-button{
+            border-radius:290px;
+            width: 70px;
+            margin-left:250px;
+            height:72px;
+            padding:2px;
+            margin-top: -50px;
+            background-color: #4A55A2;
+        }
+
+
+    </style>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="name">
+    Dashboard
+</div>
+
+<div class="container">
+    <div class="chart-container">
+        <h3 class="flex-fill text-dark">Priorities</h3>
+        <canvas id="productPieChart"></canvas>
+    </div>
+    <div class="product-section">
+        <div class="title-and-button">
+        <h3 class="flex-fill text-dark">EOS/EOL Product Map</h3>
+            <div class="product-info">
+                <span class="total">@totalCount Products</span>
+            </div>
+        </div>
+
+
+     <div class="otherBox">
+        <div class="product-boxes">
+            @foreach (var product in Model)
+            {
+                if (product.Status != "Decommissioned")
+                {
+                    <div class="status-box @(product.Status.ToLower().Replace(" ", "-"))"></div>
+                }
+            }
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="second">
+    <div class="row">
+        <div class="col">
+            <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+            <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+            <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+        </div>
+        <h5 class="it"> IT Custodians
+            <a asp-action="AddOrEdit" asp-controller="Custodian" class="btn btn-sm btn-success add-button">
+                <i class="bi bi-plus-circle-fill" style=" font-size: 3rem; color:white;"></i>
+            </a>
+        </h5>
+        <a asp-action="Index" asp-controller="Custodian" class="btn btn-secondary viewbutton" style="width: 30%;">View Lists</a>
+        
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('productPieChart').getContext('2d');
+        var productPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Active', 'Extended Support'],
+                datasets: [{
+                    data: [@activePercentage, @extendedSupportPercentage],
+                    backgroundColor: ['green', 'yellow'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                var label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += Math.round(context.raw * 100) / 100 + '%';
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>

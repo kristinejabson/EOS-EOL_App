@@ -1,0 +1,183 @@
+﻿@model IEnumerable<TimeBasedPreventiveMeasures.Models.Data.Custodian>
+
+@{
+    ViewData["Title"] = "Hardwares";
+    ViewData["CurrentScreen"] = "Hardwares";
+}
+
+<style>
+    .header {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #C5DFF8;
+        margin-bottom: 20px;
+        overflow: auto;
+    }
+
+        .header .ITheader {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h5 {
+            margin: 0;
+            flex: 1;
+        }
+
+            .header h5 input {
+                display: inline-block;
+                width: auto;
+            }
+
+        .header .btn {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+            .header .btn .bi {
+                margin-right: 10px;
+            }
+
+    #Itperson {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+        #Itperson h1 {
+            font-size: 1.25rem;
+            margin: 0;
+            text-align: left;
+        }
+
+    .add-button {
+        width: 8%;
+        height: 20%;
+        font-size: 20px;
+        margin-top: -25px;
+        background-color: #4A55A2;
+        justify-content: center;
+        border-radius: 15px;
+    }
+
+    .table-container {
+        max-width: 200%;
+    }
+
+    .table th, .table td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    .table thead th {
+        background-color: #4A55A2;
+        color: #fff;
+    }
+
+    .table tbody tr {
+        background-color: #C5DFF8;
+    }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #d1ecf1;
+        }
+
+    .table th:nth-child(1), .table td:nth-child(1) {
+        width: 25%;
+    }
+
+    .table th:nth-child(2), .table td:nth-child(2) {
+        width: 25%;
+    }
+
+    .table th:nth-child(3), .table td:nth-child(3) {
+        width: 20%;
+    }
+
+    .table th:nth-child(4), .table td:nth-child(4) {
+        width: 20%;
+    }
+
+</style>
+
+<div class="header">
+    <div class="row ITheader">
+        <h5>
+            Search for It Custodians
+            <form class="d-flex" asp-action="Index" asp-controller="Custodian">
+                <input id="custom-search-box" name="searchString" class="form-control me-1" type="search" placeholder="Search" aria-label="Search" value="@ViewData["CurrentFilter"]">
+            </form>
+            <i>
+                <h3 style="margin-left: 570px; margin-top: -50px"> IT Custodians Lists</h3>
+            </i>
+        </h5>
+        <a asp-action="AddOrEdit" class="btn btn-sm btn-success add-button" style="margin-top: 10px; margin-right: 50px;">
+            <i class="bi bi-plus-circle-fill" style="margin-right: 1px; color:white;"></i> Add
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CustodianRole)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        <h5 style="font-size: 15px;">Update</h5>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <i class="bi bi-person-badge-fill"></i>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustodianRole)
+                        </td>
+                        <td>
+                            <i class="bi bi-envelope-check-fill"></i>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@item.CustodianId">
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-action="AddOrEdit" asp-route-id="@item.CustodianId" class="btn btn-warning">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure to delete this record?')">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
